@@ -10,7 +10,6 @@ from .serializers import RegisterSerializer, LoginSerializer, PasswordResetSeria
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
-
 class ActivateAccountView(generics.GenericAPIView):
     permission_classes = [AllowAny]
     def get(self, request, uidb64, token, *args, **kwargs):
@@ -81,15 +80,6 @@ class PasswordResetConfirmView(generics.GenericAPIView):
         serializer.save()
         return Response({"message": "Password has been reset successfully."}, status=status.HTTP_200_OK)
     
-# class ProfileView(generics.RetrieveAPIView):
-#     serializer_class = ProfileSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-
-#     def get_object(self):
-#         # Return the profile of the currently authenticated user
-#         return self.request.user
-    
-# accounts/views.py
 class ProfileView(generics.RetrieveAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
