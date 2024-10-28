@@ -13,10 +13,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import dj_database_url
+import environ
+
+# Initialize environment variables
+env = environ.Env()
+environ.Env.read_env()  # Loads the .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -32,13 +36,13 @@ ALLOWED_HOSTS = []
 # settings.py
 # For development
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Gmail SMTP server
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True  # Use TLS for secure connection
-EMAIL_HOST_USER = 'samuelayo61@gmail.com'  # Your email address
-EMAIL_HOST_PASSWORD = 'adlswgihiiducycq'  # Your email password
-DEFAULT_FROM_EMAIL = 'samuelayo61@gmail.com'
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env.int('EMAIL_PORT')
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 # settings.py
 SITE_URL = "http://127.0.0.1:8000"
@@ -117,7 +121,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.parse("postgres://default:sYtLB4Nea6TA@ep-winter-snow-a41i3fbb.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require")
+    'default': dj_database_url.parse(env('DATABASE_URL'))
 }
 
 
